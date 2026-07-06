@@ -13,7 +13,10 @@
   :root{
     --navy:#0F3D7A;
     --blue:#1852A3;
-    --green:#7DC352;
+    --green:#8BCE63;
+    --green-hi:#AEE58E;
+    --green-lo:#79C155;
+    --green-metal:linear-gradient(180deg, #AEE58E 0%, #93D46E 46%, #7FC85C 100%);
     --forest:#2E7D32;
     --orange:#E07B1A;
     --bg:#F6F9F6;
@@ -79,8 +82,9 @@
   .navlinks a{color:rgba(255,255,255,.82); font-size:.92rem; font-weight:500; transition:color .2s;}
   .navlinks a:hover{color:#fff;}
   .nav-cta{
-    background:var(--green); color:#0B2540; font-weight:600; font-size:.88rem;
+    background:var(--green-metal); color:#0B2540; font-weight:600; font-size:.88rem;
     padding:9px 16px; border-radius:8px; white-space:nowrap;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 2px 5px rgba(46,125,50,.16);
   }
   .menu-toggle{display:none; background:none; border:0; color:#fff; font-size:1.5rem; cursor:pointer;}
 
@@ -110,8 +114,11 @@
     transition:transform .15s ease, background .2s ease;
   }
   .btn:hover{transform:translateY(-1px);}
-  .btn-primary{background:var(--green); color:#0B2540;}
-  .btn-primary:hover{background:#8fd166;}
+  .btn-primary{
+    background:var(--green-metal); color:#0B2540;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.55), inset 0 -1px 0 rgba(15,61,122,.10), 0 2px 6px rgba(46,125,50,.18);
+  }
+  .btn-primary:hover{background:linear-gradient(180deg, #BCEB9F 0%, #9DDA79 46%, #88CF66 100%);}
   .btn-outline{border-color:rgba(255,255,255,.35); color:#fff;}
   .btn-outline:hover{background:rgba(255,255,255,.08);}
 
@@ -153,10 +160,16 @@
   #sobre .section-head-lg{font-size:clamp(2.3rem, 5vw, 3.2rem); font-weight:700; color:var(--navy);}
   .pillars-visual .pillar{padding:0; overflow:hidden;}
   .pillar-visual{
-    height:136px; display:flex; align-items:center; justify-content:center;
+    height:172px; display:flex; align-items:center; justify-content:center;
     background:linear-gradient(155deg, var(--navy), var(--blue) 130%);
+    position:relative; overflow:hidden;
   }
-  .pillar-body{padding:22px 24px 26px;}
+  .pillar-visual::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(140px 90px at 80% 12%, rgba(125,195,82,.16), transparent 70%);
+  }
+  .pillar-visual svg{position:relative; z-index:1;}
+  .pillar-body{padding:24px 24px 28px; text-align:center;}
   .pillar-body .num{font-family:var(--mono); font-size:.75rem; color:var(--orange); font-weight:600;}
   .pillar-body h3{font-size:1.12rem; color:var(--navy); margin:10px 0 8px;}
   .pillar-body p{color:var(--ink-soft); font-size:.95rem;}
@@ -169,9 +182,11 @@
   }
   .pillar .num{font-family:var(--mono); font-size:.75rem; color:var(--orange); font-weight:600;}
   .pillar-icon{
-    width:44px; height:44px; border-radius:10px; background:rgba(24,82,163,.08);
-    display:flex; align-items:center; justify-content:center; margin:14px 0 16px; color:var(--blue);
+    width:72px; height:72px; border-radius:18px;
+    background:linear-gradient(150deg, rgba(125,195,82,.20), rgba(24,82,163,.10));
+    display:flex; align-items:center; justify-content:center; margin:16px 0 18px; color:var(--forest);
   }
+  #diferenciais .pillar{padding:30px 26px;}
   .pillar h3{font-size:1.12rem; color:var(--navy); margin-bottom:8px;}
   .pillar p{color:var(--ink-soft); font-size:.95rem;}
 
@@ -179,19 +194,30 @@
   .segmentos{background:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
   .seg-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
   .seg-card{
-    border:1px solid var(--line); border-radius:14px; padding:24px 20px; background:var(--bg);
-    display:flex; flex-direction:column; gap:12px; transition:border-color .2s, transform .2s, box-shadow .2s;
+    position:relative; overflow:hidden;
+    border:1px solid var(--line); border-radius:14px; padding:26px 20px 24px; background:var(--paper);
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px;
+    transition:border-color .2s, transform .2s, box-shadow .2s;
     box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
   }
-  .seg-card:hover{border-color:var(--green); transform:translateY(-2px);}
+  .seg-card > *{position:relative; z-index:1;}
+  .seg-card:hover{border-color:var(--green); transform:translateY(-2px); box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 12px 26px rgba(15,61,122,.08);}
+  /* soft themed glow + illustration watermark */
+  .seg-card::before{content:""; position:absolute; z-index:0; top:-30%; left:50%; width:150%; height:80%; transform:translateX(-50%); pointer-events:none;}
+  .seg-bg{position:absolute; z-index:0; inset:0; display:flex; align-items:flex-end; justify-content:center; pointer-events:none;}
+  .seg-bg svg{width:76%; height:auto; opacity:.14; transform:translateY(20%);}
+  .seg-odonto::before{background:radial-gradient(60% 100% at 50% 0%, rgba(24,82,163,.10), transparent 70%);}
+  .seg-food::before{background:radial-gradient(60% 100% at 50% 0%, rgba(224,123,26,.10), transparent 70%);}
+  .seg-shop::before{background:radial-gradient(60% 100% at 50% 0%, rgba(46,125,50,.10), transparent 70%);}
+  .seg-health::before{background:radial-gradient(60% 100% at 50% 0%, rgba(13,148,136,.10), transparent 70%);}
   .seg-icon{
-    width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center;
     background:var(--navy); color:var(--green);
   }
-  .seg-card h3{font-size:1.02rem; color:var(--navy);}
+  .seg-card h3{font-size:1.04rem; color:var(--navy);}
   .seg-card p{font-size:.88rem; color:var(--ink-soft);}
   .seg-tag{
-    align-self:flex-start; font-family:var(--mono); font-size:.68rem; letter-spacing:.04em;
+    align-self:center; font-family:var(--mono); font-size:.68rem; letter-spacing:.04em; margin-top:2px;
     color:var(--forest); background:rgba(46,125,50,.08); padding:4px 9px; border-radius:6px;
   }
 
@@ -255,8 +281,8 @@
   /* Floating WhatsApp */
   .float-wa{
     position:fixed; right:20px; bottom:20px; z-index:60;
-    background:var(--green); color:#0B2540; width:56px; height:56px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center; box-shadow:0 10px 24px rgba(0,0,0,.25);
+    background:var(--green-metal); color:#0B2540; width:56px; height:56px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 10px 24px rgba(0,0,0,.25);
     transition:transform .2s;
   }
   .float-wa:hover{transform:scale(1.06);}
@@ -312,6 +338,12 @@
       </div>
     </div>
     <div class="hero-side">
+      <div class="econ-mini metal-sheen">
+        <p class="econ-mini-q">Quer economizar de 70 até 90% no seu empreendimento?</p>
+        <div class="econ-mini-stat">70 a 90%</div>
+        <p class="econ-mini-sub">de economia na limpeza e higienização mensal</p>
+        <a class="btn btn-primary econ-mini-cta" href="https://wa.me/5562996229931" target="_blank" rel="noopener">Quero economizar agora</a>
+      </div>
       <div class="dilution-card metal-sheen" id="dilutionCard">
         <div class="cap">Sistema de diluição automática</div>
         <ul class="dilution-checklist">
@@ -329,12 +361,6 @@
           </li>
         </ul>
       </div>
-      <div class="econ-mini metal-sheen">
-        <p class="econ-mini-q">Quer economizar de 70 até 90% no seu empreendimento?</p>
-        <div class="econ-mini-stat">70 a 90%</div>
-        <p class="econ-mini-sub">de economia na limpeza e higienização mensal</p>
-        <a class="btn btn-primary econ-mini-cta" href="https://wa.me/5562996229931" target="_blank" rel="noopener">Quero economizar agora</a>
-      </div>
     </div>
   </div>
 </section>
@@ -349,30 +375,56 @@
     <div class="pillars pillars-visual">
       <div class="pillar">
         <div class="pillar-visual">
-          <svg viewBox="0 0 160 100" width="130" height="82" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg viewBox="0 0 200 132" width="190" height="125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <linearGradient id="pvJug" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#3E7FD6"/><stop offset="100%" stop-color="#0F3D7A"/>
+                <stop offset="0%" stop-color="#4A8AE0"/><stop offset="100%" stop-color="#0F3D7A"/>
               </linearGradient>
               <linearGradient id="pvBottle" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#a9e08b"/><stop offset="100%" stop-color="#7DC352"/>
+                <stop offset="0%" stop-color="#B7EC96"/><stop offset="100%" stop-color="#7DC352"/>
+              </linearGradient>
+              <linearGradient id="pvLiq" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#8BCE63"/><stop offset="100%" stop-color="#2E7D32"/>
               </linearGradient>
             </defs>
-            <!-- concentrated jug -->
-            <g transform="translate(18,18)">
-              <rect x="12" y="0" width="14" height="10" rx="2" fill="url(#pvJug)"/>
-              <path d="M2 10 h34 a5 5 0 0 1 5 5 v40 a6 6 0 0 1 -6 6 H3 a6 6 0 0 1 -6 -6 v-40 a5 5 0 0 1 5 -5 Z" fill="url(#pvJug)"/>
-              <rect x="4" y="30" width="34" height="9" fill="rgba(255,255,255,.25)"/>
-              <path d="M-3 22 q-8 4 -8 14 v10" stroke="url(#pvJug)" stroke-width="6" fill="none" stroke-linecap="round" opacity=".55"/>
+            <ellipse cx="48" cy="118" rx="34" ry="6" fill="rgba(0,0,0,.18)"/>
+            <ellipse cx="150" cy="120" rx="42" ry="5" fill="rgba(0,0,0,.15)"/>
+            <!-- concentrate jug -->
+            <g transform="translate(22,28)">
+              <rect x="14" y="-6" width="18" height="12" rx="3" fill="#0C315F"/>
+              <path d="M-5 18 q-13 5 -13 19 v11" stroke="#0F3D7A" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M-5 18 q-13 5 -13 19 v11" stroke="#3E7FD6" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/>
+              <path d="M2 6 h42 a6 6 0 0 1 6 6 v54 a8 8 0 0 1 -8 8 H4 a8 8 0 0 1 -8 -8 V12 a6 6 0 0 1 6 -6 Z" fill="url(#pvJug)"/>
+              <rect x="5" y="30" width="42" height="28" rx="4" fill="rgba(255,255,255,.94)"/>
+              <circle cx="16" cy="44" r="6.5" fill="url(#pvLiq)"/>
+              <path d="M16 39 q4.5 4.5 0 9 q-4.5 -4.5 0 -9Z" fill="#fff" opacity=".75"/>
+              <line x1="27" y1="41" x2="44" y2="41" stroke="#0F3D7A" stroke-width="2.6" stroke-linecap="round"/>
+              <line x1="27" y1="48" x2="40" y2="48" stroke="#7DC352" stroke-width="2.6" stroke-linecap="round"/>
+              <rect x="7" y="11" width="7" height="15" rx="3" fill="rgba(255,255,255,.32)"/>
             </g>
-            <!-- dashed arrow -->
-            <path d="M76 58 H104" stroke="rgba(255,255,255,.4)" stroke-width="2" stroke-dasharray="4 5"/>
-            <path d="M98 52 L106 58 L98 64" stroke="rgba(255,255,255,.4)" stroke-width="2" fill="none"/>
-            <!-- diluted bottle -->
-            <g transform="translate(114,26)">
-              <rect x="9" y="0" width="10" height="8" rx="2" fill="url(#pvBottle)"/>
-              <path d="M2 8 h24 a4 4 0 0 1 4 4 v34 a5 5 0 0 1 -5 5 H3 a5 5 0 0 1 -5 -5 V12 a4 4 0 0 1 4 -4 Z" fill="url(#pvBottle)"/>
+            <!-- arrow concentrate -> diluted -->
+            <path d="M86 60 H112" stroke="rgba(255,255,255,.5)" stroke-width="2.4" stroke-dasharray="4 5"/>
+            <path d="M106 53 L115 60 L106 67" stroke="#a9e08b" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- diluted bottles x3 (mais volume) -->
+            <g transform="translate(120,46)">
+              <g>
+                <rect x="6" y="-6" width="9" height="7" rx="2" fill="#2E7D32"/>
+                <path d="M2 1 h17 a3 3 0 0 1 3 3 v30 a4 4 0 0 1 -4 4 H3 a4 4 0 0 1 -4 -4 V4 a3 3 0 0 1 3 -3 Z" fill="url(#pvBottle)"/>
+                <rect x="3" y="15" width="16" height="9" fill="rgba(255,255,255,.85)"/>
+              </g>
+              <g transform="translate(27,-5)">
+                <rect x="6" y="-6" width="9" height="7" rx="2" fill="#2E7D32"/>
+                <path d="M2 1 h17 a3 3 0 0 1 3 3 v35 a4 4 0 0 1 -4 4 H3 a4 4 0 0 1 -4 -4 V4 a3 3 0 0 1 3 -3 Z" fill="url(#pvBottle)"/>
+                <rect x="3" y="17" width="16" height="9" fill="rgba(255,255,255,.85)"/>
+              </g>
+              <g transform="translate(54,3)">
+                <rect x="6" y="-6" width="9" height="7" rx="2" fill="#2E7D32"/>
+                <path d="M2 1 h17 a3 3 0 0 1 3 3 v27 a4 4 0 0 1 -4 4 H3 a4 4 0 0 1 -4 -4 V4 a3 3 0 0 1 3 -3 Z" fill="url(#pvBottle)"/>
+                <rect x="3" y="13" width="16" height="9" fill="rgba(255,255,255,.85)"/>
+              </g>
             </g>
+            <circle cx="104" cy="44" r="2.4" fill="#a9e08b" opacity=".9"/>
+            <circle cx="98" cy="86" r="1.8" fill="#a9e08b" opacity=".7"/>
           </svg>
         </div>
         <div class="pillar-body">
@@ -384,26 +436,52 @@
 
       <div class="pillar">
         <div class="pillar-visual">
-          <svg viewBox="0 0 160 100" width="130" height="82" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg viewBox="0 0 200 132" width="190" height="125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <linearGradient id="pvDev" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#a9e08b"/><stop offset="100%" stop-color="#2E7D32"/>
+                <stop offset="0%" stop-color="#B7EC96"/><stop offset="100%" stop-color="#2E7D32"/>
+              </linearGradient>
+              <linearGradient id="pvBkt" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4A8AE0"/><stop offset="100%" stop-color="#0F3D7A"/>
               </linearGradient>
             </defs>
-            <!-- water hose -->
-            <path d="M126 12 q10 2 10 14 v10" stroke="rgba(255,255,255,.35)" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <circle cx="128" cy="10" r="5" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="3"/>
+            <!-- mounting backplate -->
+            <rect x="58" y="20" width="84" height="70" rx="12" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/>
+            <circle cx="66" cy="28" r="2" fill="rgba(255,255,255,.3)"/>
+            <circle cx="134" cy="28" r="2" fill="rgba(255,255,255,.3)"/>
+            <circle cx="66" cy="82" r="2" fill="rgba(255,255,255,.3)"/>
+            <circle cx="134" cy="82" r="2" fill="rgba(255,255,255,.3)"/>
+            <!-- water inlet -->
+            <path d="M150 8 q6 2 6 12 v10 q0 8 -8 8 h-8" stroke="rgba(255,255,255,.4)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <circle cx="150" cy="7" r="5" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="3"/>
+            <path d="M150 4 v3" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linecap="round"/>
             <!-- diluter device body -->
-            <g transform="translate(52,14)">
-              <rect x="0" y="0" width="46" height="58" rx="10" fill="url(#pvDev)"/>
-              <rect x="8" y="10" width="30" height="16" rx="4" fill="rgba(255,255,255,.9)"/>
-              <text x="23" y="21" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#0F3D7A" font-weight="600">1:2</text>
-              <circle cx="23" cy="42" r="7" fill="rgba(255,255,255,.9)"/>
-              <path d="M20 42 l2 2 l4 -5" stroke="#2E7D32" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <g transform="translate(74,30)">
+              <rect x="0" y="0" width="52" height="50" rx="11" fill="url(#pvDev)"/>
+              <rect x="0" y="0" width="52" height="15" rx="11" fill="rgba(255,255,255,.18)"/>
+              <rect x="9" y="9" width="34" height="17" rx="4" fill="rgba(255,255,255,.95)"/>
+              <text x="26" y="22" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#0F3D7A" font-weight="700">1:2</text>
+              <circle cx="15" cy="38" r="6.5" fill="rgba(255,255,255,.95)"/>
+              <path d="M12 38 l2 2.5 l4.5 -5.5" stroke="#2E7D32" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="38" cy="38" r="6.5" fill="rgba(15,61,122,.25)" stroke="rgba(255,255,255,.6)" stroke-width="2"/>
+              <path d="M38 33 v5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
             </g>
             <!-- output hoses -->
-            <path d="M60 72 q-14 4 -14 16 v6" stroke="rgba(255,255,255,.35)" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path d="M88 72 q14 4 14 16 v6" stroke="rgba(255,255,255,.35)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M84 80 q-16 6 -16 20 v6" stroke="rgba(255,255,255,.4)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M116 80 q16 6 16 18 v8" stroke="rgba(255,255,255,.4)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <!-- bucket -->
+            <g transform="translate(52,108)">
+              <path d="M0 0 h32 l-4 18 h-24 Z" fill="url(#pvBkt)"/>
+              <ellipse cx="16" cy="0" rx="16" ry="4" fill="#4A8AE0"/>
+              <ellipse cx="16" cy="1" rx="12" ry="2.5" fill="#0C315F"/>
+            </g>
+            <!-- spray bottle -->
+            <g transform="translate(120,104)">
+              <rect x="4" y="6" width="14" height="20" rx="3" fill="url(#pvDev)"/>
+              <rect x="6" y="12" width="10" height="8" fill="rgba(255,255,255,.7)"/>
+              <path d="M11 6 v-4 h6 l3 3" fill="none" stroke="#2E7D32" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="9" y="0" width="6" height="4" rx="1" fill="#2E7D32"/>
+            </g>
           </svg>
         </div>
         <div class="pillar-body">
@@ -415,21 +493,36 @@
 
       <div class="pillar">
         <div class="pillar-visual">
-          <svg viewBox="0 0 160 100" width="130" height="82" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <!-- graduation cap -->
-            <g transform="translate(38,10)">
-              <path d="M42 0 L84 16 L42 32 L0 16 Z" fill="#a9e08b"/>
-              <path d="M20 21 v14 q22 10 44 0 v-14" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="78" y1="18" x2="78" y2="34" stroke="#E07B1A" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="78" cy="38" r="3" fill="#E07B1A"/>
+          <svg viewBox="0 0 200 132" width="190" height="125" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="pvCap" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#B7EC96"/><stop offset="100%" stop-color="#7DC352"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="100" cy="122" rx="60" ry="6" fill="rgba(0,0,0,.15)"/>
+            <!-- checklist board -->
+            <g transform="translate(56,44)">
+              <rect x="0" y="0" width="96" height="72" rx="8" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.42)" stroke-width="1.5"/>
+              <rect x="30" y="-7" width="36" height="12" rx="3" fill="rgba(255,255,255,.6)"/>
+              <g>
+                <rect x="12" y="18" width="16" height="16" rx="4" fill="rgba(125,195,82,.25)" stroke="#7DC352" stroke-width="1.6"/>
+                <path d="M15 26 l3.5 3.5 l6 -7" stroke="#a9e08b" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="36" y1="26" x2="84" y2="26" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <g>
+                <rect x="12" y="44" width="16" height="16" rx="4" fill="rgba(125,195,82,.25)" stroke="#7DC352" stroke-width="1.6"/>
+                <path d="M15 52 l3.5 3.5 l6 -7" stroke="#a9e08b" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="36" y1="52" x2="72" y2="52" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>
+              </g>
             </g>
-            <!-- checklist card -->
-            <g transform="translate(30,52)">
-              <rect x="0" y="0" width="100" height="40" rx="6" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
-              <path d="M10 12 l4 4 l7 -8" stroke="#7DC352" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="28" y1="13" x2="86" y2="13" stroke="rgba(255,255,255,.55)" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M10 27 l4 4 l7 -8" stroke="#7DC352" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="28" y1="28" x2="72" y2="28" stroke="rgba(255,255,255,.55)" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- graduation cap -->
+            <g transform="translate(50,6)">
+              <path d="M50 0 L100 19 L50 38 L0 19 Z" fill="url(#pvCap)"/>
+              <path d="M50 0 L100 19 L50 38 Z" fill="rgba(15,61,122,.10)"/>
+              <path d="M24 25 v15 q26 12 52 0 v-15" fill="rgba(46,125,50,.35)" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="94" y1="21" x2="94" y2="40" stroke="#E07B1A" stroke-width="3" stroke-linecap="round"/>
+              <path d="M94 40 l-3 8 h6 Z" fill="#E07B1A"/>
+              <circle cx="94" cy="20" r="3.4" fill="#E07B1A"/>
             </g>
           </svg>
         </div>
@@ -451,33 +544,62 @@
       <p>Protocolos e produtos adaptados às exigências de cada setor.</p>
     </div>
     <div class="seg-grid">
-      <div class="seg-card">
+      <div class="seg-card seg-odonto">
+        <div class="seg-bg" aria-hidden="true">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60 14c-14 0-24 8-24 20 0 6 3 12 6 30 2 12 4 30 10 30 5 0 6-14 8-14s3 14 8 14c6 0 8-18 10-30 3-18 6-24 6-30 0-12-10-20-24-20Z" fill="#1852A3"/>
+            <path d="M42 32 q7 -9 18 -9" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".55"/>
+          </svg>
+        </div>
         <div class="seg-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c-3 0-5 2-5 5v3l-3 8a4 4 0 0 0 4 5c2 0 3-2 4-6 1 4 2 6 4 6a4 4 0 0 0 4-5l-3-8V7c0-3-2-5-5-5Z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c-3 0-5 2-5 5v3l-3 8a4 4 0 0 0 4 5c2 0 3-2 4-6 1 4 2 6 4 6a4 4 0 0 0 4-5l-3-8V7c0-3-2-5-5-5Z"/></svg>
         </div>
         <h3>Odontológico</h3>
         <p>Protocolos de limpeza concorrente e terminal alinhados à RDC ANVISA nº 1.002/2025.</p>
         <span class="seg-tag">CONFORMIDADE ANVISA</span>
       </div>
-      <div class="seg-card">
+      <div class="seg-card seg-food">
+        <div class="seg-bg" aria-hidden="true">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 62a24 24 0 1 1 13 -45 a20 20 0 0 1 34 0 a24 24 0 1 1 13 45 Z" fill="#E07B1A"/>
+            <rect x="30" y="60" width="60" height="34" rx="7" fill="#E07B1A"/>
+            <line x1="44" y1="66" x2="44" y2="88" stroke="#fff" stroke-width="3.4" opacity=".5" stroke-linecap="round"/>
+            <line x1="60" y1="66" x2="60" y2="88" stroke="#fff" stroke-width="3.4" opacity=".5" stroke-linecap="round"/>
+            <line x1="76" y1="66" x2="76" y2="88" stroke="#fff" stroke-width="3.4" opacity=".5" stroke-linecap="round"/>
+          </svg>
+        </div>
         <div class="seg-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 3v7a4 4 0 0 0 4 4h0V3M6 3v7M4 3h4M15 3c-2 3-2 6 0 8v10"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 3v7a4 4 0 0 0 4 4h0V3M6 3v7M4 3h4M15 3c-2 3-2 6 0 8v10"/></svg>
         </div>
         <h3>Alimentação</h3>
         <p>Restaurantes, hamburguerias e lanchonetes com rotina de higienização segura para cozinha e salão.</p>
         <span class="seg-tag">HIGIENE ALIMENTAR</span>
       </div>
-      <div class="seg-card">
+      <div class="seg-card seg-shop">
+        <div class="seg-bg" aria-hidden="true">
+          <svg viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+            <rect x="22" y="56" width="86" height="54" rx="4" fill="#2E7D32"/>
+            <path d="M16 56 l10 -22 h78 l10 22 Z" fill="#2E7D32"/>
+            <path d="M26 34 h78 l-5 12 h-68 Z" fill="#fff" opacity=".4"/>
+            <rect x="52" y="74" width="26" height="36" rx="3" fill="#fff" opacity=".45"/>
+          </svg>
+        </div>
         <div class="seg-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
         </div>
         <h3>Shoppings &amp; Comércio</h3>
         <p>Planos de limpeza para áreas comuns, banheiros e lojas, com produtos certos para cada superfície.</p>
         <span class="seg-tag">ALTO FLUXO</span>
       </div>
-      <div class="seg-card">
+      <div class="seg-card seg-health">
+        <div class="seg-bg" aria-hidden="true">
+          <svg viewBox="0 0 130 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M65 102 C34 79 18 63 18 44 A22 22 0 0 1 65 34 A22 22 0 0 1 112 44 C112 63 96 79 65 102Z" fill="#0D9488"/>
+            <path d="M32 60 h15 l6 -13 l8 26 l6 -13 h21" stroke="#fff" stroke-width="4.2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".65"/>
+          </svg>
+        </div>
         <div class="seg-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6C19 16.5 12 21 12 21Z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6C19 16.5 12 21 12 21Z"/></svg>
         </div>
         <h3>Saúde &amp; Clínicas</h3>
         <p>Consultórios e clínicas médicas com desinfecção adequada para ambientes de atendimento.</p>
@@ -497,21 +619,41 @@
     <div class="pillars">
       <div class="pillar">
         <div class="pillar-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+          <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="16" cy="34" r="8" fill="#E07B1A"/>
+            <text x="16" y="38" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="700" fill="#fff">$</text>
+            <path d="M8 30 L20 18 L27 25 L40 12" stroke="#2E7D32" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M31 12 h9 v9" stroke="#2E7D32" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="20" cy="18" r="2.6" fill="#7DC352"/>
+            <circle cx="27" cy="25" r="2.6" fill="#7DC352"/>
+          </svg>
         </div>
         <h3>Menos compra, mais rendimento</h3>
         <p>Um litro concentrado substitui vários litros de produto pronto, reduzindo a frequência e o volume de reposição.</p>
       </div>
       <div class="pillar">
         <div class="pillar-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v6M12 16v6M4.9 4.9l4.2 4.2M14.9 14.9l4.2 4.2M2 12h6M16 12h6M4.9 19.1l4.2-4.2M14.9 9.1l4.2-4.2"/></svg>
+          <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="24" r="16" fill="none" stroke="#1852A3" stroke-width="2.4" opacity=".35"/>
+            <circle cx="24" cy="24" r="9" fill="none" stroke="#1852A3" stroke-width="2.4" opacity=".55"/>
+            <path d="M24 8 c6 8 9 12 9 17 a9 9 0 0 1 -18 0 c0 -5 3 -9 9 -17Z" fill="#7DC352"/>
+            <path d="M24 20 c3 4 4.5 6 4.5 8.5 a4.5 4.5 0 0 1 -9 0 c0 -2.5 1.5 -4.5 4.5 -8.5Z" fill="#fff" opacity=".55"/>
+            <path d="M20 25 l3 3 l6 -7" stroke="#2E7D32" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
         <h3>Dosagem certa, sem desperdício</h3>
         <p>A diluição automática elimina o erro de "olhômetro" na mistura manual — cada aplicação usa exatamente o necessário.</p>
       </div>
       <div class="pillar">
         <div class="pillar-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="10" width="4" height="10"/><rect x="10" y="6" width="4" height="14"/><rect x="17" y="3" width="4" height="17"/></svg>
+          <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <line x1="8" y1="40" x2="42" y2="40" stroke="#1852A3" stroke-width="2.4" stroke-linecap="round" opacity=".4"/>
+            <rect x="9" y="26" width="8" height="14" rx="2" fill="#1852A3"/>
+            <rect x="20" y="20" width="8" height="20" rx="2" fill="#7DC352"/>
+            <rect x="31" y="14" width="8" height="26" rx="2" fill="#2E7D32"/>
+            <circle cx="35" cy="10" r="6" fill="#E07B1A"/>
+            <path d="M32.5 10 l2 2 l3 -3.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
         <h3>Custo previsível todo mês</h3>
         <p>Com consumo padronizado, fica fácil planejar o orçamento de limpeza e enxergar a economia no fim do mês.</p>
